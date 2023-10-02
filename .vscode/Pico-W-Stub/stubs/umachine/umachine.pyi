@@ -29,8 +29,7 @@ Descriptions taken from
 
 """
 from collections.abc import Callable, Sequence
-from typing import overload, NoReturn
-from typing import ClassVar, Any
+from typing import overload, NoReturn, ClassVar, Any, Literal, Optional, Union
 
 
 class ADC:
@@ -47,7 +46,7 @@ class ADC:
        val = adc.read_u16()     # read a raw analog value in the range 0-65535
     """
 
-    def __init__(self, pin: int|Pin, /):
+    def __init__(self, pin: Union[int, Pin], /):
         """
         Access the ADC associated with a source identified by *id*.  This
         *id* may be an integer (usually specifying a channel number), a
@@ -72,19 +71,197 @@ class Pin:
     digital logic level. For analog control of a pin, see the ADC class.
     """
 
-    ALT = 3
-    IN = 0
-    IRQ_FALLING = 4
-    IRQ_RISING = 8
-    OPEN_DRAIN = 2
-    OUT = 1
-    PULL_DOWN = 2
-    PULL_UP = 1
+    ALT = 3 # type: int
+    ALT_GPCK = 8 # type: int
+    ALT_I2C = 3 # type: int
+    ALT_PIO0 = 6 # type: int
+    ALT_PIO1 = 7 # type: int
+    ALT_PWM = 4 # type: int
+    ALT_SIO = 5 # type: int
+    ALT_SPI = 1 # type: int
+    ALT_UART = 2 # type: int
+    ALT_USB = 9 # type: int
+    IN = 0 # type: int
+    IRQ_FALLING = 4 # type: int
+    IRQ_RISING = 8 # type: int
+    OPEN_DRAIN = 2 # type: int
+    OUT = 1 # type: int
+    PULL_DOWN = 2 # type: int
+    PULL_UP = 1 # type: int
 
-    def __init__(self, id: int|str, /, mode: int = IN, pull: int = PULL_UP, af: str|int = -1):
+    class board():
+        GP0 : Pin
+        """ <class 'Pin'> = Pin(GPIO0, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP1 : Pin
+        """ <class 'Pin'> = Pin(GPIO1, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP10 : Pin
+        """ <class 'Pin'> = Pin(GPIO10, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP11 : Pin
+        """ <class 'Pin'> = Pin(GPIO11, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP12 : Pin
+        """ <class 'Pin'> = Pin(GPIO12, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP13 : Pin
+        """ <class 'Pin'> = Pin(GPIO13, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP14 : Pin
+        """ <class 'Pin'> = Pin(GPIO14, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP15 : Pin
+        """ <class 'Pin'> = Pin(GPIO15, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP16 : Pin
+        """ <class 'Pin'> = Pin(GPIO16, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP17 : Pin
+        """ <class 'Pin'> = Pin(GPIO17, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP18 : Pin
+        """ <class 'Pin'> = Pin(GPIO18, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP19 : Pin
+        """ <class 'Pin'> = Pin(GPIO19, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP2 : Pin
+        """ <class 'Pin'> = Pin(GPIO2, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP20 : Pin
+        """ <class 'Pin'> = Pin(GPIO20, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP21 : Pin
+        """ <class 'Pin'> = Pin(GPIO21, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP22 : Pin
+        """ <class 'Pin'> = Pin(GPIO22, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP26 : Pin
+        """ <class 'Pin'> = Pin(GPIO26, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP27 : Pin
+        """ <class 'Pin'> = Pin(GPIO27, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP28 : Pin
+        """ <class 'Pin'> = Pin(GPIO28, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP3 : Pin
+        """ <class 'Pin'> = Pin(GPIO3, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP4 : Pin
+        """ <class 'Pin'> = Pin(GPIO4, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP5 : Pin
+        """ <class 'Pin'> = Pin(GPIO5, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP6 : Pin
+        """ <class 'Pin'> = Pin(GPIO6, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP7 : Pin
+        """ <class 'Pin'> = Pin(GPIO7, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP8 : Pin
+        """ <class 'Pin'> = Pin(GPIO8, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GP9 : Pin
+        """ <class 'Pin'> = Pin(GPIO9, mode=ALT, pull=PULL_DOWN, alt=31) """
+        LED : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO0, mode=IN) """
+        WL_GPIO0 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO0, mode=IN) """
+        WL_GPIO1 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO1, mode=IN) """
+        WL_GPIO2 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO2, mode=IN) """
+
+    class cpu():
+
+        EXT_GPIO0 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO0, mode=IN) """
+        EXT_GPIO1 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO1, mode=IN) """
+        EXT_GPIO2 : Pin
+        """ <class 'Pin'> = Pin(EXT_GPIO2, mode=IN) """
+        GPIO0 : Pin
+        """ <class 'Pin'> = Pin(GPIO0, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO1 : Pin
+        """ <class 'Pin'> = Pin(GPIO1, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO10 : Pin
+        """ <class 'Pin'> = Pin(GPIO10, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO11 : Pin
+        """ <class 'Pin'> = Pin(GPIO11, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO12 : Pin
+        """ <class 'Pin'> = Pin(GPIO12, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO13 : Pin
+        """ <class 'Pin'> = Pin(GPIO13, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO14 : Pin
+        """ <class 'Pin'> = Pin(GPIO14, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO15 : Pin
+        """ <class 'Pin'> = Pin(GPIO15, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO16 : Pin
+        """ <class 'Pin'> = Pin(GPIO16, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO17 : Pin
+        """ <class 'Pin'> = Pin(GPIO17, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO18 : Pin
+        """ <class 'Pin'> = Pin(GPIO18, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO19 : Pin
+        """ <class 'Pin'> = Pin(GPIO19, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO2 : Pin
+        """ <class 'Pin'> = Pin(GPIO2, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO20 : Pin
+        """ <class 'Pin'> = Pin(GPIO20, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO21 : Pin
+        """ <class 'Pin'> = Pin(GPIO21, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO22 : Pin
+        """ <class 'Pin'> = Pin(GPIO22, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO23 : Pin
+        """ <class 'Pin'> = Pin(GPIO23, mode=ALT, alt=31) """
+        GPIO24 : Pin
+        """ <class 'Pin'> = Pin(GPIO24, mode=ALT, alt=31) """
+        GPIO25 : Pin
+        """ <class 'Pin'> = Pin(GPIO25, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO26 : Pin
+        """ <class 'Pin'> = Pin(GPIO26, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO27 : Pin
+        """ <class 'Pin'> = Pin(GPIO27, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO28 : Pin
+        """ <class 'Pin'> = Pin(GPIO28, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO29 : Pin
+        """ <class 'Pin'> = Pin(GPIO29, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO3 : Pin
+        """ <class 'Pin'> = Pin(GPIO3, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO4 : Pin
+        """ <class 'Pin'> = Pin(GPIO4, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO5 : Pin
+        """ <class 'Pin'> = Pin(GPIO5, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO6 : Pin
+        """ <class 'Pin'> = Pin(GPIO6, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO7 : Pin
+        """ <class 'Pin'> = Pin(GPIO7, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO8 : Pin
+        """ <class 'Pin'> = Pin(GPIO8, mode=ALT, pull=PULL_DOWN, alt=31) """
+        GPIO9 : Pin
+        """ <class 'Pin'> = Pin(GPIO9, mode=ALT, pull=PULL_DOWN, alt=31) """
+
+    def __init__(self, id: Union[int, str, tuple[Any,Any]], mode: int = -1, pull: Optional[int] = -1, *, value: Optional[int] = None, drive: int = 0, alt: int = -1):
         """
-        Create a new Pin object associated with the id.  If additional arguments are given,
-        they are used to initialise the pin.  See :meth:`pin.init`.
+        Access the pin peripheral (GPIO pin) associated with the given id. If additional arguments are
+        given in the constructor then they are used to initialise the pin. Any settings that are not
+        specified will remain in their previous state.
+
+The arguments are:
+
+- `id` is mandatory and can be an arbitrary object. Among possible value types are: int
+(an internal Pin identifier), str (a Pin name), and tuple (pair of [port, pin]).
+- `mode` specifies the pin mode, which can be one of:
+    - `Pin.IN` - Pin is configured for input. If viewed as an output the pin is in high-impedance state.
+    - `Pin.OUT` - Pin is configured for (normal) output.
+    - `Pin.OPEN_DRAIN` - Pin is configured for open-drain output. Open-drain output works in the
+    following way: if the output value is set to 0 the pin is active at a low level; if the output
+    value is 1 the pin is in a high-impedance state. Not all ports implement this mode, or some might only on certain pins.
+    - `Pin.ALT` - Pin is configured to perform an alternative function, which is port specific. For
+    a pin configured in such a way any other Pin methods (except Pin.init()) are not applicable
+    (calling them will lead to undefined, or a hardware-specific, result). Not all ports implement this mode.
+    - `Pin.ALT_OPEN_DRAIN` - The Same as `Pin.ALT`, but the pin is configured as open-drain. Not all
+    ports implement this mode.
+    - `Pin.ANALOG` - Pin is configured for analog input, see the ADC class.
+- `pull` specifies if the pin has a (weak) pull resistor attached, and can be one of:
+    - `None` - No pull up or down resistor.
+    - `Pin.PULL_UP` - Pull up resistor enabled.
+    - `Pin.PULL_DOWN` - Pull down resistor enabled.
+- `value` is valid only for `Pin.OUT` and `Pin.OPEN_DRAIN` modes and specifies initial output pin value if
+given, otherwise the state of the pin peripheral remains unchanged.
+- `drive` specifies the output power of the pin and can be one of: `Pin.DRIVE_0`, `Pin.DRIVE_1`, etc.,
+increasing in drive strength. The actual current driving capabilities are port dependent. Not all ports implement this argument.
+- `alt` specifies an alternate function for the pin and the values it can take are port dependent. This
+argument is valid only for `Pin.ALT` and `Pin.ALT_OPEN_DRAIN` modes. It may be used when a pin supports
+more than one alternate function. If only one pin alternate function is supported the this argument is
+not required. Not all ports implement this argument.
+
+As specified above, the Pin class allows to set an alternate function for a particular pin, but it does not specify any
+further operations on such a pin. Pins configured in alternate-function mode are usually not used as GPIO but are instead
+driven by other hardware peripherals. The only operation supported on such a pin is re-initialising, by calling the
+constructor or `Pin.init()` method. If a pin that is configured in alternate-function mode is re-initialised
+with `Pin.IN`, `Pin.OUT`, or `Pin.OPEN_DRAIN`, the alternate function will be removed from the pin.
+
+        (Source: https://docs.micropython.org/en/latest/library/machine.Pin.html, Copyright: 2014-2023 Damien P. George, Paul Sokolovsky, and contributors.)
         """
         ...
 
@@ -94,9 +271,10 @@ class Pin:
         """
         ...
 
-    def init(self):
+    def init(self, mode: int = -1, pull: Optional[int] = -1, *, value: Optional[int] = None, drive: int = 0, alt: int = -1):
         """
-        Initialises the pin.
+        Re-initialise the pin using the given parameters. Only those arguments that are specified will be set. The rest
+        of the pin peripheral state will remain unchanged. See the constructor documentation for details of the arguments.
         """
         ...
 
@@ -134,13 +312,13 @@ class Pin:
         """
         ...
 
-    def value(self, value: Any=..., /) -> None:
+    def value(self, value: Any=..., /) -> Optional[Literal[0, 1]]:
         """
         Get or set the digital logic level of the pin:
 
             - With no argument, return 0 or 1 depending on the logic level of the pin.
-            - With ``value`` given, set the logic level of the pin.  ``value`` can be
-            anything that converts to a boolean.  If it converts to ``True``, the pin
+            - With ``value`` given, set the logic level of the pin. `value` can be
+            anything that converts to a boolean. If it converts to `True`, the pin
             is set high, otherwise it is set low.
         """
         ...
@@ -222,9 +400,9 @@ class SPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        sck: Pin|None = None,
-        mosi: Pin|None = None,
-        miso: Pin|None = None,
+        sck: Optional[Pin] = None,
+        mosi: Optional[Pin] = None,
+        miso: Optional[Pin] = None,
     ):
         """
         Construct an SPI object on the given bus, *id*. Values of *id* depend
@@ -249,7 +427,7 @@ class SPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        pins: tuple[Pin, Pin, Pin]|None = None,
+        pins: Optional[tuple[Pin, Pin, Pin]] = None,
     ):
         """
         Construct an SPI object on the given bus, *id*. Values of *id* depend
@@ -272,9 +450,9 @@ class SPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        sck: Pin|None = None,
-        mosi: Pin|None = None,
-        miso: Pin|None = None,
+        sck: Optional[Pin] = None,
+        mosi: Optional[Pin] = None,
+        miso: Optional[Pin] = None,
     ) -> None:
         """
         Initialise the SPI bus with the given parameters:
@@ -308,7 +486,7 @@ class SPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        pins: tuple[Pin, Pin, Pin]|None = None,
+        pins: Optional[tuple[Pin, Pin, Pin]] = None,
     ) -> None:
         """
         Initialise the SPI bus with the given parameters:
@@ -347,7 +525,7 @@ class SPI:
         """
         ...
 
-    def readinto(self, buf: bytes, write: int = 0x00, /) -> int|None:
+    def readinto(self, buf: bytes, write: int = 0x00, /) -> Optional[int]:
         """
          Read into the buffer specified by ``buf`` while continuously writing the
          single byte given by ``write``.
@@ -357,7 +535,7 @@ class SPI:
         """
         ...
 
-    def write(self, buf: bytes, /) -> int|None:
+    def write(self, buf: bytes, /) -> Optional[int]:
         """
          Write the bytes contained in ``buf``.
          Returns ``None``.
@@ -366,7 +544,7 @@ class SPI:
         """
         ...
 
-    def write_readinto(self, write_buf: bytes, read_buf: bytes, /) -> int|None:
+    def write_readinto(self, write_buf: bytes, read_buf: bytes, /) -> Optional[int]:
         """
          Write the bytes from ``write_buf`` while reading into ``read_buf``.  The
          buffers can be the same or different, but both buffers must have the
@@ -406,6 +584,7 @@ class SoftSPI:
    set the first bit to be the least significant bit
    """
 
+    @overload
     def __init__(
         self,
         id: int,
@@ -416,9 +595,9 @@ class SoftSPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        sck: Pin|None = None,
-        mosi: Pin|None = None,
-        miso: Pin|None = None,
+        sck: Optional[Pin] = None,
+        mosi: Optional[Pin] = None,
+        miso: Optional[Pin] = None,
     ):
         """
         Construct an SPI object on the given bus, *id*. Values of *id* depend
@@ -443,7 +622,7 @@ class SoftSPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        pins: tuple[Pin, Pin, Pin]|None = None,
+        pins: Optional[tuple[Pin, Pin, Pin]] = None,
     ):
         """
         Construct an SPI object on the given bus, *id*. Values of *id* depend
@@ -466,9 +645,9 @@ class SoftSPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        sck: Pin|None = None,
-        mosi: Pin|None = None,
-        miso: Pin|None = None,
+        sck: Optional[Pin] = None,
+        mosi: Optional[Pin] = None,
+        miso: Optional[Pin] = None,
     ) -> None:
         """
         Initialise the SPI bus with the given parameters:
@@ -502,7 +681,7 @@ class SoftSPI:
         phase: int = 0,
         bits: int = 8,
         firstbit: int = MSB,
-        pins: tuple[Pin, Pin, Pin]|None = None,
+        pins: Optional[tuple[Pin, Pin, Pin]] = None,
     ) -> None:
         """
         Initialise the SPI bus with the given parameters:
@@ -541,7 +720,7 @@ class SoftSPI:
         """
         ...
 
-    def readinto(self, buf: bytes, write: int = 0x00, /) -> int|None:
+    def readinto(self, buf: bytes, write: int = 0x00, /) -> Optional[int]:
         """
          Read into the buffer specified by ``buf`` while continuously writing the
          single byte given by ``write``.
@@ -551,7 +730,7 @@ class SoftSPI:
         """
         ...
 
-    def write(self, buf: bytes, /) -> int|None:
+    def write(self, buf: bytes, /) -> Optional[int]:
         """
          Write the bytes contained in ``buf``.
          Returns ``None``.
@@ -560,7 +739,7 @@ class SoftSPI:
         """
         ...
 
-    def write_readinto(self, write_buf: bytes, read_buf: bytes, /) -> int|None:
+    def write_readinto(self, write_buf: bytes, read_buf: bytes, /) -> Optional[int]:
         """
          Write the bytes from ``write_buf`` while reading into ``read_buf``.  The
          buffers can be the same or different, but both buffers must have the
@@ -1009,7 +1188,7 @@ class PWM:
         """
         ...
 
-    def freq(self, frequency: int|None=...):
+    def freq(self, frequency: Optional[int]=...):
         """
         With no arguments the frequency in Hz is returned.
 
@@ -1017,7 +1196,7 @@ class PWM:
         """
         ...
 
-    def duty_u16(self, duration: int|None=...):
+    def duty_u16(self, duration: Optional[int]=...):
         """
         Get or Set the current duty cycle of the PWM output, as an unsigned 16-bit value in the range 0 to 65535 inclusive.
 
@@ -1027,7 +1206,7 @@ class PWM:
         """
         ...
 
-    def duty_ns(self, duration: int|None=...):
+    def duty_ns(self, duration: Optional[int]=...):
         """
         Get or Set the current pulse width of the PWM output, as a value in nanoseconds.
 
@@ -1064,7 +1243,7 @@ class Signal:
         ...
 
     @overload
-    def __init__(self, id: int|str, /, mode: int = Pin.IN, pull: int = Pin.PULL_UP, af: str|int = -1, invert: bool = False):
+    def __init__(self, id: Union[int, str], /, mode: int = Pin.IN, pull: int = Pin.PULL_UP, af: Union[str, int] = -1, invert: bool = False):
         """
         Create a ``Signal`` object by passing required ``Pin`` parameters directly
         to ``Signal`` constructor, skipping the need to create intermediate ``Pin`` object.
@@ -1121,47 +1300,23 @@ class SoftI2C:
     Software I2C is implemented by bit-banging and can be used on any pin but is not
     as efficient.  These classes have the same methods available and differ primarily
     in the way they are constructed.
-
-    Example usage::
-
-        from machine import I2C
-
-        # create I2C peripheral at frequency of 400kHz
-        i2c = I2C(freq=400000)
-                                        # depending on the port, extra parameters may be required
-                                        # to select the peripheral and/or pins to use
-
-        i2c.scan()                      # scan for slaves, returning a list of 7-bit addresses
-
-        # write 3 bytes to slave with 7-bit address 42
-        i2c.writeto(42, b'123')
-        # read 4 bytes from slave with 7-bit address 42
-        i2c.readfrom(42, 4)
-
-        i2c.readfrom_mem(42, 8, 3)      # read 3 bytes from memory of slave 42,
-                                        #   starting at memory-address 8 in the slave
-        i2c.writeto_mem(42, 2, b'\x10') # write 1 byte to memory of slave 42
-                                        #   starting at address 2 in the slave
     """
 
-    def __init__(self, id: int, /, *, scl: Pin, sda: Pin, freq: int = 400_000):
+    def __init__(self, scl: Pin, sda: Pin, *, freq: int = 400_000, timeout: int = 50_000):
         """
-        Construct and return a new I2C object using the following parameters:
+        Construct and return a new software I2C object using the following parameters:
 
-           - *id* identifies a particular I2C peripheral.  Allowed values for
-             depend on the particular port/board
            - *scl* should be a pin object specifying the pin to use for SCL.
            - *sda* should be a pin object specifying the pin to use for SDA.
            - *freq* should be an integer which sets the maximum frequency
              for SCL.
-
-        Note that some ports/boards will have default values of *scl* and *sda*
-        that can be changed in this constructor.  Others will have fixed values
-        of *scl* and *sda* that cannot be changed.
+           - *timeout* is the maximum time in microseconds to wait for clock 
+             stretching (SCL held low by another device on the bus), 
+             after which an `OSError(ETIMEDOUT)` exception is raised.
         """
         ...
 
-    def init(self, *, scl: Pin, sda: Pin, freq: int = 400_000) -> None:
+    def init(self, scl: Pin, sda: Pin, *, freq: int = 400_000, timeout: int = 50_000) -> None:
         """
        Initialise the I2C bus with the given arguments:
 
@@ -1429,12 +1584,13 @@ class Timer:
 
     def __init__(
         self,
-        id: int|None=None,
+        id: Optional[int] = None,
         /,
         *,
         mode: int = PERIODIC,
+        freq: Optional[float] = None,
         period: int = -1,
-        callback: Callable[["Timer"], None] |None = None,
+        callback: Optional[Callable[["Timer"], None]] = None,
     ):
         """
         Construct a new timer object of the given id. Id of -1 constructs a
@@ -1447,10 +1603,10 @@ class Timer:
     def init(
         self,
         *,
-        freq: float|None = None,
         mode: int = PERIODIC,
+        freq: Optional[float] = None,
         period: int = -1,
-        callback: Callable[["Timer"], None]|None = None,
+        callback: Optional[Callable[["Timer"], None]] = None,
     ) -> None:
         """
         Initialise the timer. Example::
@@ -1491,7 +1647,7 @@ class UART:
     INV_TX = 1 # type: int
     RTS = 2 # type: int
 
-    def __init__(self, id: int, baudrate: int = 9600, bits: int = 8, parity: int|None = None, stop: int = 1, tx: Pin|None = None, rx: Pin|None = None):
+    def __init__(self, id: int, baudrate: int = 9600, bits: int = 8, parity: Optional[int] = None, stop: int = 1, tx: Optional[Pin] = None, rx: Optional[Pin] = None):
         """
         Construct a UART object of the given id and initialise the UART
         bus with the given parameters:
@@ -1516,7 +1672,7 @@ class UART:
         """
         ...
 
-    def init(self, baudrate: int = 9600, bits: int = 8, parity: int|None = None, stop: int = 1, **kwargs) -> Any:
+    def init(self, baudrate: int = 9600, bits: int = 8, parity: Optional[int] = None, stop: int = 1, **kwargs) -> Any:
         ...
 
     def any(self) -> int:
@@ -1525,7 +1681,7 @@ class UART:
         """
         ...
 
-    def read(self, nbytes: int|None=None) -> bytes|None:
+    def read(self, nbytes: Optional[int]=None) -> Optional[bytes]:
         """
         Read characters.  If ``nbytes`` is specified then read at most that many bytes.
         If ``nbytes`` are available in the buffer, returns immediately, otherwise returns
@@ -1542,7 +1698,7 @@ class UART:
         """
         ...
 
-    def readinto(self, buf: bytes, nbytes: int|None=None, /) -> int|None:
+    def readinto(self, buf: bytes, nbytes: Optional[int]=None, /) -> Optional[int]:
         """
         Read bytes into the ``buf``.  If ``nbytes`` is specified then read at most
         that many bytes.  Otherwise, read at most ``len(buf)`` bytes.
@@ -1552,7 +1708,7 @@ class UART:
         """
         ...
 
-    def readline(self) -> str|None:
+    def readline(self) -> Optional[str]:
         """
         Read a line, ending in a newline character. If such a line exists, return is
         immediate. If the timeout elapses, all available data is returned regardless
@@ -1562,7 +1718,7 @@ class UART:
         """
         ...
 
-    def write(self, buf: bytes, /) -> int|None:
+    def write(self, buf: bytes, /) -> Optional[int]:
         """
         Write the buffer of bytes to the bus.  If characters are 7 or 8 bits wide
         then each byte is one character.  If characters are 9 bits wide then two
@@ -1654,7 +1810,7 @@ def bootloader() -> NoReturn:
     ...
 
 
-def deepsleep(time_ms: int|None = None) -> None:
+def deepsleep(time_ms: Optional[int] = None) -> None:
     """
     Stops execution in an attempt to enter a low power state.
 
@@ -1677,7 +1833,7 @@ def deepsleep(time_ms: int|None = None) -> None:
     ...
 
 
-def lightleep(time_ms: int|None = None) -> None:
+def lightsleep(time_ms: Optional[int] = None) -> None:
     """
     Stops execution in an attempt to enter a low power state.
 
@@ -1732,11 +1888,31 @@ def idle():
     """
     ...
 
+class mem:
+    """Don't use this class/type! It's only for type annotations. And does not exist at runtime!"""
+    def __getitem__(self, address: int) -> int: ...
+    def __setitem__(self, address: int, value: int) -> None: ...
 
-mem16 = None
-mem32 = None
-mem8 = None
+mem16: mem
+"""Read/write 16 bits of memory.
 
+Use subscript notation `[...]` to index these objects with the address of interest. 
+Note that the address is the byte address, regardless of the size of memory being accessed.
+"""
+
+mem32: mem
+"""Read/write 32 bits of memory.
+
+Use subscript notation `[...]` to index these objects with the address of interest. 
+Note that the address is the byte address, regardless of the size of memory being accessed.
+"""
+
+mem8: mem
+"""Read/write 8 bits of memory.
+
+Use subscript notation `[...]` to index these objects with the address of interest. 
+Note that the address is the byte address, regardless of the size of memory being accessed.
+"""
 
 def reset():
     """

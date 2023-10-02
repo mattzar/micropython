@@ -3,15 +3,30 @@ import array
 from color_conversion import hsl_to_rgb
 import time
 import math
-from utils import linspace, is_iterable
 
+def linspace(start, stop, n):
+    if n == 1:
+        yield stop
+        return
+    h = (stop - start) / (n - 1)
+    for i in range(n):
+        yield start + h * i
+
+def is_iterable(element):
+    try:
+        iter(element)
+    except TypeError:
+        return 0
+    else:
+        return 1
 
 def interpolate_indexed_color_linear(color0, color1, resolution):
 
     i_0, x0_0, x1_0, x2_0 = color0
     i_1, x0_1, x1_1, x2_1 = color1
 
-    di = i_1 - i_0
+    di = min((i_1 - i_0, 1))
+
     dx0di = (x0_1 - x0_0) / di
     dx1di = (x1_1 - x1_0) / di
     dx2di = (x2_1 - x2_0) / di
